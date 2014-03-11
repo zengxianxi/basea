@@ -1,0 +1,35 @@
+$page.setTitle("组织列表")
+<a href="#">添加</a>
+<table id="dg" title="$page.title" data-options="
+				rownumbers:true,
+				singleSelect:true,
+				autoRowHeight:false,
+				pagination:true,
+				pageSize:10">
+    <thead>
+    <tr>
+        <th field="orgName" width="80">组织名称</th>
+        <th field="description" width="120">描述信息</th>
+        <th field="operate" width="120">操作</th>
+    </tr>
+    </thead>
+</table>
+<script>
+    $(function () {
+        var datagrid = $('#dg').datagrid();
+        datagrid.datagrid('loadData', getData());
+
+    });
+
+    function getData() {
+        var rows = [];
+        #foreach($organization in $organizationList )
+            rows.push({
+                orgName: "$organization.orgName",
+                description: "$!organization.description",
+                operate: "<a href='$organization.orgId'>编辑</a>|<a href='$organization.orgId'>删除</a>"
+            });
+        #end
+        return rows;
+    }
+</script>

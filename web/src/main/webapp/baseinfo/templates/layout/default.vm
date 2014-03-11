@@ -1,0 +1,6 @@
+$control.setTemplate("home:head")
+$control.setTemplate("home:navigation")
+<div class="frame_content">
+    $screen_placeholder
+</div>
+$control.setTemplate("home:foot")

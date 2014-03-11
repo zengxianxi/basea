@@ -1,0 +1,47 @@
+$page.setTitle("组织列表")
+<div class="operate_panel panel-body">
+    <a href="$organizationLink.setTarget("")" class="easyui-linkbutton" data-options="plain:true">添加</a>
+    <a href="#" class="easyui-linkbutton" data-options="plain:true">搜索</a>
+</div>
+<table id="tg" title="组织结构" data-options="
+				rownumbers: true,
+				animate: true,
+				fitColumns: true,
+				idField: 'orgId',
+				treeField: 'orgName'
+			">
+    <thead>
+    <tr>
+        <th data-options="field:'orgName',width:80">组织名称</th>
+        <th data-options="field:'description',width:120">描述</th>
+        <th data-options="field:'operate',width:120">操作</th>
+    </tr>
+    </thead>
+</table>
+<script type="text/javascript">
+    $(function () {
+    ##加载数据
+        var treeGrid = $('#tg').treegrid();
+        $.getJSON("orgListJson.json", function (orgList) {
+            var datas = [];
+            $.each(orgList, function (i, org) {
+                var orgJson = {};
+                orgJson.orgId = org.orgId;
+                orgJson.orgName = org.orgName;
+                orgJson.description = org.description;
+                if (org.parentOrg) {
+                    orgJson._parentId = org.parentOrg.orgId;
+                }
+
+                var editOperate = "<a class=\"\" href=\"javascript:operate('edit','" + org.orgId + "')\">编辑</a >";
+                var removeOperate = "<a class=\"\" href=\"javascript:save('remove','" + org.orgId + "')\">删除</a >";
+                var detailOperate = "<a class=\"\" href=\"javascript:save('detail','" + org.orgId + "')\">查看详情</a >";
+                orgJson.operate = editOperate + "|" + removeOperate + "|" + detailOperate;
+                datas.push(orgJson);
+            });
+            treeGrid.treegrid("loadData", {rows: datas});
+        });
+    });
+
+
+</script>

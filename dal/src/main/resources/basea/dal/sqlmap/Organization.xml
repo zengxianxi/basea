@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="Organization">
+    <typeAlias alias="organization" type="com.xianxi.basea.dal.po.Organization"/>
+    <resultMap id="organizationResult" class="organization">
+        <result property="orgId" column="org_id"/>
+        <result property="orgName" column="org_name"/>
+        <result property="description" column="description"/>
+        <result property="parentOrg.orgId" column="parent_id"/>
+    </resultMap>
+
+    <insert id="insertOrganization" parameterClass="organization"><![CDATA[
+        INSERT INTO security_organization(
+            org_id,
+            org_name,
+            description,
+            parent_id
+        )VALUES(
+            #orgId#,
+            #orgName#,
+            #description#,
+            #parentOrg.orgId#
+        )
+    ]]></insert>
+
+    <delete id="deleteOrganization" parameterClass="string"><![CDATA[
+        DELETE FROM security_organization WHERE org_id=#orgId#
+    ]]></delete>
+
+    <update id="updateOrganization" parameterClass="organization"><![CDATA[
+        UPDATE
+            security_organization
+        SET
+            org_name=#orgName#,
+            description=#description#,
+            parent_id=#parentOrg.orgId#
+        WHERE
+            org_id=#orgId#
+    ]]></update>
+
+
+    <select id="getOrganization" resultMap="organizationResult" parameterClass="string"><![CDATA[
+        SELECT
+            org_id,
+            org_name,
+            description,
+            parent_id
+        FROM
+            security_organization
+        WHERE
+            org_id=#value#;
+    ]]></select>
+    <select id="listOrganization" resultMap="organizationResult"><![CDATA[
+        SELECT
+            org_id,
+            org_name,
+            description,
+            parent_id
+        FROM
+            security_organization
+    ]]></select>
+
+</sqlMap>

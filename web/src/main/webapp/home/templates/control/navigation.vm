@@ -1,0 +1,9 @@
+<div id="sys_nav" class="panel-header">
+    <div class="panel-title">
+        <li class="icon-nav icon-local"></li>
+        <li>当前位置：</li>
+        <li><a href="$homeLink.setTarget("welcome")">首页</a></li>
+        <li class="icon-nav icon-next"></li>
+        <li><a href="welcome">系统字典</a></li>
+    </div>
+</div>
